@@ -1,12 +1,15 @@
-import { ActivityType, ClientEvents, Events } from "discord.js";
+import { ActivityType, Client, ClientEvents, Events } from "discord.js";
+import { startBirthdayCheck } from "../birthday-checker";
 import client from "./client";
 
-export async function clientReadyHandler(...[]: ClientEvents[Events.ClientReady]) {
+export async function clientReadyHandler(...[readyClient]: ClientEvents[Events.ClientReady]) {
     console.log("Bot is ready!");
 
-    client.user?.setActivity({ type: ActivityType.Watching, name: "for commands" });
+    readyClient.user?.setActivity({ type: ActivityType.Watching, name: "for commands" });
 
     setInterval(() => {
-        client.user?.setActivity({ type: ActivityType.Watching, name: "for commands" });
+        readyClient.user?.setActivity({ type: ActivityType.Watching, name: "for commands" });
     }, 60000);
+
+    startBirthdayCheck(readyClient);
 }
