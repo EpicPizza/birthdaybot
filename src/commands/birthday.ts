@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { Data } from "../discord";
 import { firebaseAdmin } from "../firebase";
 
@@ -131,7 +131,11 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
             if (nextBirthday) {
                 const user = await interaction.client.users.fetch(nextBirthday.userId);
-                await interaction.reply(`The next birthday is ${user.username}'s on ${nextBirthday.date.getMonth() + 1}/${nextBirthday.date.getDate()}.`);
+                const embed = new EmbedBuilder()
+                    .setTitle('🎉 Next Birthday')
+                    .setDescription(`The next birthday is <@${user.id}>'s on **${nextBirthday.date.getMonth() + 1}/${nextBirthday.date.getDate()}**!`)
+                    .setColor('Aqua');
+                await interaction.reply({ embeds: [embed] });
             } else {
                 await interaction.reply({ content: 'Could not determine the next birthday.', ephemeral: true });
             }
@@ -146,14 +150,19 @@ export async function execute(interaction: ChatInputCommandInteraction) {
                 return;
             }
 
-            let message = 'Here are all the birthdays:\n';
+            const embed = new EmbedBuilder()
+                .setTitle('🎂 All Birthdays')
+                .setColor('Gold');
+
+            let description = '';
             for (const doc of snapshot.docs) {
                 const data = doc.data();
                 const user = await interaction.client.users.fetch(doc.id);
-                message += `- ${user.username}: ${data.month}/${data.day}\n`;
+                description += `**<@${user.id}>**: ${data.month}/${data.day}\n`;
             }
+            embed.setDescription(description);
 
-            await interaction.reply(message);
+            await interaction.reply({ embeds: [embed] });
             break;
         }
     }
