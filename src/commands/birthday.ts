@@ -5,7 +5,7 @@ import { firebaseAdmin } from "../firebase";
 export const data: Data[] = [
     {
         type: 'slash',
-        name: 'set_birthday',
+        name: 'slash-set_birthday',
         command: new SlashCommandBuilder()
             .setName('set_birthday')
             .setDescription('Sets your birthday.')
@@ -24,28 +24,28 @@ export const data: Data[] = [
     },
     {
         type: 'slash',
-        name: 'reset_birthday',
+        name: 'slash-reset_birthday',
         command: new SlashCommandBuilder()
             .setName('reset_birthday')
             .setDescription('Removes your birthday from the list.'),
     },
     {
         type: 'slash',
-        name: 'show_birthdate',
+        name: 'slash-show_birthdate',
         command: new SlashCommandBuilder()
             .setName('show_birthdate')
             .setDescription("Gets your birthday if you already have one set."),
     },
     {
         type: 'slash',
-        name: 'next',
+        name: 'slash-next',
         command: new SlashCommandBuilder()
             .setName('next')
             .setDescription("Lists the closest birthdate to the current date."),
     },
     {
         type: 'slash',
-        name: 'list',
+        name: 'slash-list',
         command: new SlashCommandBuilder()
             .setName('list')
             .setDescription("Lists all birthday entries."),
